@@ -225,7 +225,7 @@
             const medium = urlParams.get('utm_medium') || 'none';
             
             // 2. Build the handshake message with #source variable
-            const baseText = "Hi, I’d like to check availability for an upcoming airport transfer. #";
+            const baseText = "Hi, I’d like to check availability for an upcoming airport transfer. \n\n#";
             const sourceTag = `${source}_${medium}`;
             const fullMessage = baseText + sourceTag;
 
