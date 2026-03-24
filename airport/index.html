@@ -6,7 +6,7 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K8RGR6X9');</script>
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -22,7 +22,7 @@
         .glass { backdrop-filter: blur(20px); background: rgba(10, 10, 10, 0.4); }
         .bg-spotlight { background: radial-gradient(circle at 50% -10%, #1e1e1e 0%, #0a0a0a 100%); }
         
-        /* Refined Interaction: Removed Shimmer for a more 'Static Premium' feel */
+        /* Refined Interaction */
         .btn-tap { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn-tap:active { transform: scale(0.96); opacity: 0.9; }
         
@@ -44,7 +44,8 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <a href="tel:+917310586101" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl hover:bg-white/10 transition-all border border-white/5 active:scale-90" aria-label="Call Rovio Travels">
+                <!-- Phone Tracking: Nav_Phone -->
+                <a href="tel:+917310586101" onclick="trackCall('Nav_Phone')" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl hover:bg-white/10 transition-all border border-white/5 active:scale-90" aria-label="Call Rovio Travels">
                     <i data-lucide="phone" class="w-4 h-4 text-[#e7e5e4] opacity-60"></i>
                 </a>
                 <button onclick="sendWA('Header_Chat')" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl hover:bg-white/10 transition-all border border-white/5 active:scale-90" aria-label="Chat on WhatsApp">
@@ -70,7 +71,6 @@
             Background-verified chauffeurs. Gate meeting protocol. Zero cancellations.
         </p>
         
-        <!-- CTA: Hero (Refined padding and shadow) -->
         <button onclick="sendWA('Hero_CTA')" class="btn-tap flex items-center justify-between text-left w-full p-5 rounded-3xl bg-[#e7e5e4] text-black shadow-[0_20px_50px_-12px_rgba(231,229,228,0.25)] border-b-2 border-black/10 mb-4">
             <div class="flex items-center pl-2">
                 <span class="text-base font-bold uppercase tracking-tight">Check Availability</span>
@@ -180,13 +180,14 @@
     <footer class="max-w-md mx-auto px-10 text-center pb-20">
         <div class="w-px h-16 bg-white mx-auto mb-10 opacity-30"></div>
         <p class="text-[8px] font-bold uppercase tracking-widest italic mb-6 opacity-30">Premium Airport Logistics Specialists</p>
-        <a href="tel:+917310586101" class="inline-flex items-center gap-3 text-stone-300 hover:text-white transition-colors bg-white/5 px-6 py-4 rounded-[1.5rem] border border-white/5 active:scale-95 shadow-xl">
+        <!-- Phone Tracking: Footer_Phone -->
+        <a href="tel:+917310586101" onclick="trackCall('Footer_Phone')" class="inline-flex items-center gap-3 text-stone-300 hover:text-white transition-colors bg-white/5 px-6 py-4 rounded-[1.5rem] border border-white/5 active:scale-95 shadow-xl">
             <i data-lucide="phone" class="w-4 h-4 opacity-50"></i>
             <span class="text-sm font-bold tracking-widest">+91 73105 86101</span>
         </a>
     </footer>
 
-    <!-- Sticky Primary (Refined Font and Icon restoration) -->
+    <!-- Sticky Primary -->
     <div id="sticky-bar" class="fixed bottom-0 left-0 right-0 p-8 z-50 glass border-t border-white/5 shadow-2xl opacity-0 pointer-events-none translate-y-8 transition-all duration-500">
         <div class="max-w-md mx-auto">
             <button onclick="sendWA('Sticky_Footer')" class="btn-tap flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#e7e5e4] text-black shadow-lg">
@@ -199,17 +200,47 @@
     <script>
         lucide.createIcons();
 
+        // Updated Tracking for Phone Calls including UTMs
+        function trackCall(ref) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get('utm_source') || 'direct';
+            const medium = urlParams.get('utm_medium') || 'none';
+
+            if (window.dataLayer) {
+                window.dataLayer.push({
+                    'event': 'phone_click',
+                    'ref_location': ref,
+                    'utm_source': source,
+                    'utm_medium': medium
+                });
+            }
+        }
+
         function sendWA(ref) {
             const phoneNumber = "917310586101"; 
-            const message = encodeURIComponent("Hi Rovio, I'm checking availability for a premium Delhi Airport transfer.");
             
+            // 1. Get UTMs from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get('utm_source') || 'direct';
+            const medium = urlParams.get('utm_medium') || 'none';
+            
+            // 2. Build the handshake message with #source variable
+            const baseText = "Hi, I’d like to check availability for an upcoming airport transfer. #";
+            const sourceTag = `${source}_${medium}`;
+            const fullMessage = baseText + sourceTag;
+
+            // 3. WhatsApp click event for GTM
             if (window.dataLayer) {
                 window.dataLayer.push({
                     'event': 'whatsapp_click',
-                    'ref_location': ref
+                    'ref_location': ref,
+                    'utm_source': source,
+                    'utm_medium': medium
                 });
             }
-            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+
+            // 4. Open WhatsApp
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(fullMessage)}`, '_blank');
         }
 
         const nav = document.getElementById('nav');
@@ -227,9 +258,5 @@
             }
         });
     </script>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8RGR6X9"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 </body>
 </html>
