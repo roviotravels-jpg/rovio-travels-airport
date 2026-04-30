@@ -577,9 +577,10 @@
                     &copy; 2026 Swarit Ventures Private Limited. All rights reserved.
                 </p>
                 <div class="flex gap-4 text-gray-500">
-                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-2xl"></i></a>
-                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors"><i class="ph-fill ph-facebook-logo text-2xl"></i></a>
-                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-2xl"></i></a>
+                    <!-- Added aria-labels and rel attributes for accessibility and security -->
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-2xl"></i></a>
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-white transition-colors"><i class="ph-fill ph-facebook-logo text-2xl"></i></a>
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-2xl"></i></a>
                 </div>
             </div>
         </div>
@@ -587,56 +588,118 @@
 
     <!-- INTERACTIVITY SCRIPTS -->
     <script>
-        // 1. Mobile Menu Logic
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('open');
-        });
-
-        const mobileLinks = menu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.remove('open');
-            });
-        });
-
-        // 2. Dynamic Sticky Navbar on Scroll
-        const navbar = document.getElementById('navbar');
-        const navContainer = document.getElementById('nav-container');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                navbar.classList.add('shadow-md');
-                navbar.classList.replace('border-transparent', 'border-gray-100');
-                navContainer.classList.replace('lg:h-24', 'lg:h-20'); // Shrink slightly on scroll
-            } else {
-                navbar.classList.remove('shadow-md');
-                navbar.classList.replace('border-gray-100', 'border-transparent');
-                navContainer.classList.replace('lg:h-20', 'lg:h-24');
-            }
-        });
-
-        // 3. Intersection Observer for Scroll Reveal Animations
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
+        document.addEventListener('DOMContentLoaded', () => {
             
-            // For first load, if elements are already in viewport, reveal them
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100; // Trigger point
+            // 1. Mobile Menu Logic
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
 
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('open');
+            });
+
+            const mobileLinks = menu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.remove('open');
+                });
+            });
+
+            // 2. Dynamic Sticky Navbar on Scroll
+            const navbar = document.getElementById('navbar');
+            const navContainer = document.getElementById('nav-container');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.replace('border-transparent', 'border-gray-100');
+                    navContainer.classList.replace('lg:h-24', 'lg:h-20'); // Shrink slightly on scroll
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.replace('border-gray-100', 'border-transparent');
+                    navContainer.classList.replace('lg:h-20', 'lg:h-24');
+                }
+            }, { passive: true }); // passive true improves scroll performance
+
+            // 3. Intersection Observer for Scroll Reveal Animations (Optimized to replace scroll event listener)
+            const revealElements = document.querySelectorAll(".reveal");
+            
+            // Configuration for the Intersection Observer
+            const observerOptions = {
+                root: null, // use the viewport
+                rootMargin: '0px',
+                threshold: 0.15 // trigger when 15% of the element is visible
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        // Stop observing the element once it has been revealed
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+
+            // 4. WhatsApp Pre-fill and Tracking Logic
+            // Extract parameters from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            let source = urlParams.get('utm_source') || urlParams.get('source');
+            let medium = urlParams.get('utm_medium') || urlParams.get('medium');
+
+            // Intelligent Fallback: Check Referrer if no explicit source is found and none is stored
+            if (!source && !localStorage.getItem('utm_source') && document.referrer) {
+                try {
+                    const referrerUrl = new URL(document.referrer);
+                    const hostname = referrerUrl.hostname.replace(/^www\./, '');
+                    // Only set if referrer is not the current site
+                    if (!hostname.includes(window.location.hostname)) {
+                        source = hostname;
+                        medium = 'Referral';
+                    }
+                } catch (e) {
+                    // Ignore invalid URLs
                 }
             }
-        }
-        
-        window.addEventListener("scroll", reveal);
-        // Trigger once on load
-        reveal();
+
+            // Save to localStorage if they exist in the current URL/referrer
+            if (source) localStorage.setItem('utm_source', source);
+            if (medium) localStorage.setItem('utm_medium', medium);
+
+            // Retrieve from localStorage if not in URL, default to 'Direct' / 'Website'
+            source = source || localStorage.getItem('utm_source') || 'Direct';
+            medium = medium || localStorage.getItem('utm_medium') || 'Website';
+
+            // Construct prefilled message - Always attach lead info now
+            let message = "Hi Rovio Travels! I'm interested in planning a trip.";
+            message += `\n\n[Lead Info - Source: ${source} | Medium: ${medium}]`;
+            
+            const encodedMessage = encodeURIComponent(message);
+
+            // Find all WhatsApp links on the page
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me/918796280051"]');
+            
+            whatsappLinks.forEach(link => {
+                // Safely append the prefilled text parameter
+                const baseUrl = link.href.split('?')[0]; 
+                link.href = `${baseUrl}?text=${encodedMessage}`;
+
+                // Add click listener for GTM tracking
+                link.addEventListener('click', function() {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'whatsapp_click',
+                        'button_location': this.className.includes('fixed') ? 'floating_button' : 'page_content',
+                        'utm_source': source,
+                        'utm_medium': medium
+                    });
+                });
+            });
+        });
     </script>
 </body>
 </html>
