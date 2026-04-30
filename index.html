@@ -1,15 +1,642 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta http-equiv="refresh" content="0; url='/airport'" />
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K8RGR6X9');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rovio Travels | Well-Planned Travel Across India</title>
     
-    <script type="text/javascript">
-        window.location.href = "/airport";
+    <!-- Favicon -->
+    <link rel="icon" href="favicon_white_bg.png" type="image/png">
+
+    <!-- Preconnect to external domains for faster DNS resolution -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    
+    <!-- Preload the Hero image (Largest Contentful Paint) -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2000&q=80">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Defer non-critical scripts to prevent render blocking -->
+    <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#112A46',
+                            800: '#1A3F66',
+                            700: '#265C91',
+                            100: '#F0F4F8',
+                            50: '#F9FAFB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
     </script>
-    
-    <title>Rovio Travels | Redirecting...</title>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(17, 42, 70, 0.95) 0%, rgba(17, 42, 70, 0.7) 50%, rgba(17, 42, 70, 0.3) 100%);
+        }
+        /* Mobile menu animation */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+    </style>
 </head>
-<body style="background-color: #ffffff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <p>Loading Premium Airport Transfers... <a href="/airport.html">Click here</a></p>
+<body class="font-sans text-gray-700 antialiased bg-brand-50 relative">
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" 
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-xl hover:scale-110 hover:shadow-2xl transition-all duration-300 flex items-center justify-center group">
+        <i class="ph-fill ph-whatsapp text-3xl"></i>
+        <!-- Tooltip that shows on desktop hover -->
+        <span class="absolute right-full mr-4 bg-gray-900 text-white text-sm px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden md:block">
+            Need help? Chat with us
+        </span>
+    </a>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed w-full z-40 glass-nav border-b border-transparent transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 lg:h-24 transition-all duration-300" id="nav-container">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold text-brand-900 tracking-tight flex items-center gap-2">
+                        <img src="favicon_white_bg.png" alt="Rovio Travels Logo" class="h-8 w-auto object-contain" />
+                        Rovio Travels
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="text-gray-600 hover:text-brand-900 font-medium transition-colors">About Us</a>
+                    <a href="#services" class="text-gray-600 hover:text-brand-900 font-medium transition-colors">Services</a>
+                    <a href="#destinations" class="text-gray-600 hover:text-brand-900 font-medium transition-colors">Destinations</a>
+                    <a href="#why-us" class="text-gray-600 hover:text-brand-900 font-medium transition-colors">Why Us</a>
+                    <a href="#cta" class="bg-brand-900 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-brand-800 transition-all hover:shadow-md transform hover:-translate-y-0.5">
+                        Plan My Trip
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" aria-label="Toggle mobile menu" class="text-gray-600 hover:text-brand-900 focus:outline-none p-2">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#about" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-md hover:text-brand-900 transition-colors">About Us</a>
+                <a href="#services" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-md hover:text-brand-900 transition-colors">Services</a>
+                <a href="#destinations" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-md hover:text-brand-900 transition-colors">Destinations</a>
+                <a href="#why-us" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-md hover:text-brand-900 transition-colors">Why Us</a>
+                <div class="pt-4 pb-2">
+                    <a href="#cta" class="block w-full text-center bg-brand-900 text-white px-5 py-3.5 rounded-lg font-medium hover:bg-brand-800 transition-colors shadow-sm">
+                        Plan My Trip
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[85vh] flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Added fetchpriority and decoding for immediate load -->
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2000&q=80" 
+                 alt="Scenic Indian Landscape" 
+                 fetchpriority="high"
+                 decoding="sync"
+                 class="w-full h-full object-cover scale-105" 
+                 style="transform: scale(1.05);" /> 
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left w-full mt-8">
+            <div class="max-w-3xl reveal active">
+                <span class="inline-block py-1 px-3 rounded-full bg-white/20 backdrop-blur-md text-white text-sm font-medium tracking-wide mb-6 border border-white/30">
+                    Trusted Travel Partner
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-md tracking-tight">
+                    Well-Planned Travel Across India.
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl font-light">
+                    Rovio Travels provides structured itineraries and dependable planning for your trips. We manage the logistics so you can focus on the journey.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#cta" class="bg-brand-900 text-white text-center px-8 py-4 rounded-xl font-medium hover:bg-brand-800 transition-all shadow-xl hover:shadow-brand-900/30 text-lg flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                        Plan My Trip <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                    <a href="#services" class="bg-white/10 backdrop-blur-md text-white border border-white/40 text-center px-8 py-4 rounded-xl font-medium hover:bg-white/20 transition-all shadow-lg text-lg flex items-center justify-center">
+                        Explore Packages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BADGE STRIP -->
+    <div class="bg-white border-b border-gray-100 py-6 relative z-20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-between items-center gap-6 opacity-70 text-sm font-semibold uppercase tracking-wider text-brand-900">
+            <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-xl text-brand-700"></i> Verified Network</div>
+            <div class="flex items-center gap-2"><i class="ph-fill ph-shield-check text-xl text-brand-700"></i> Secure Bookings</div>
+            <div class="flex items-center gap-2"><i class="ph-fill ph-headset text-xl text-brand-700"></i> 24/7 Support</div>
+            <div class="flex items-center gap-2"><i class="ph-fill ph-currency-inr text-xl text-brand-700"></i> Transparent Pricing</div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 lg:py-32 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <div class="reveal">
+                    <span class="text-brand-700 font-bold tracking-widest uppercase text-xs mb-3 block">About Rovio Travels</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 tracking-tight">Structured Planning for Reliable Travel</h2>
+                    <div class="space-y-6 text-lg text-gray-600 leading-relaxed font-light">
+                        <p>We specialize in organizing complete, hassle-free travel experiences across India. Whether you are looking for a pre-planned package or a customized itinerary, our team ensures every detail is in place.</p>
+                        <p>Operating as a unit of Swarit Ventures Private Limited since 2020, Rovio Travels was built on a simple principle: good travel requires great logistics.</p>
+                        <p>We focus on practical schedules, vetted accommodations, and clear communication. Our goal is to provide a dependable foundation for your journey.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 reveal delay-200">
+                    <div class="space-y-4 pt-12">
+                        <!-- Added native lazy loading -->
+                        <img src="isa-72GwiojCwoI-unsplash.jpg" alt="Travel Planning" loading="lazy" decoding="async" class="rounded-3xl w-full h-64 object-cover shadow-lg hover:shadow-xl transition-shadow" />
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Added native lazy loading -->
+                        <img src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?auto=format&fit=crop&w=600&q=80" alt="Indian Architecture" loading="lazy" decoding="async" class="rounded-3xl w-full h-72 object-cover shadow-lg hover:shadow-xl transition-shadow" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-24 lg:py-32 bg-brand-100/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <span class="text-brand-700 font-bold tracking-widest uppercase text-xs mb-3 block">What We Offer</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Comprehensive Travel Solutions</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 reveal">
+                    <div class="w-14 h-14 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-900 mb-8 border border-brand-100">
+                        <i class="ph-fill ph-map-trifold text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Curated Packages</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm font-light">Ready-to-book itineraries designed with balanced pacing, covering India's most sought-after regions without rushing your experience.</p>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 reveal delay-100">
+                    <div class="w-14 h-14 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-900 mb-8 border border-brand-100">
+                        <i class="ph-fill ph-sliders text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Customized Trips</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm font-light">Tailored travel plans built around your specific schedule, preferences, and desired pace of travel.</p>
+                </div>
+                
+                <!-- Service Card 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 reveal delay-200">
+                    <div class="w-14 h-14 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-900 mb-8 border border-brand-100">
+                        <i class="ph-fill ph-users-three text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Group & Family</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm font-light">Coordinated logistics that comfortably accommodate families and groups, ensuring everyone has a well-managed experience.</p>
+                </div>
+                
+                <!-- Service Card 4 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 reveal delay-300">
+                    <div class="w-14 h-14 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-900 mb-8 border border-brand-100">
+                        <i class="ph-fill ph-calendar-check text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">End-to-End Planning</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm font-light">From securing accommodations to outlining daily sightseeing schedules, we organize the core essentials of your trip.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESTINATIONS SECTION -->
+    <section id="destinations" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8 reveal">
+                <div class="max-w-2xl">
+                    <span class="text-brand-700 font-bold tracking-widest uppercase text-xs mb-3 block">Explore India With Us</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Consistent Service, Diverse Landscapes</h2>
+                    <p class="text-gray-600 text-lg font-light leading-relaxed">India offers a vast range of environments. We manage travel across multiple regions, ensuring our service remains consistent wherever you go.</p>
+                </div>
+                <a href="#cta" class="inline-flex items-center gap-2 text-brand-900 font-semibold hover:text-brand-700 transition-colors whitespace-nowrap bg-brand-50 px-6 py-3 rounded-xl hover:bg-brand-100">
+                    Plan Your Region <i class="ph-bold ph-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Dest Card 1 -->
+                <div class="group cursor-pointer relative h-[400px] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow reveal">
+                    <!-- Added lazy loading -->
+                    <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80" alt="Northern Hills" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
+                        <div>
+                            <span class="bg-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Popular</span>
+                            <h3 class="text-2xl font-bold text-white mb-2">Northern Hills</h3>
+                            <p class="text-gray-200 text-sm font-light">Cooler climates and mountain landscapes</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-md p-3 rounded-full text-white transform transition-transform group-hover:translate-x-2 border border-white/30">
+                            <i class="ph-bold ph-arrow-right text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dest Card 2 -->
+                <div class="group cursor-pointer relative h-[400px] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow reveal delay-100">
+                    <!-- Added lazy loading -->
+                    <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80" alt="Central Plains" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Central Heritage</h3>
+                            <p class="text-gray-200 text-sm font-light">Historical plains and architectural wonders</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-md p-3 rounded-full text-white transform transition-transform group-hover:translate-x-2 border border-white/30">
+                            <i class="ph-bold ph-arrow-right text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dest Card 3 -->
+                <div class="group cursor-pointer relative h-[400px] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow reveal delay-200">
+                    <!-- Added lazy loading -->
+                    <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80" alt="Southern Coasts" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Coastal South</h3>
+                            <p class="text-gray-200 text-sm font-light">Tropical environments and serene backwaters</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-md p-3 rounded-full text-white transform transition-transform group-hover:translate-x-2 border border-white/30">
+                            <i class="ph-bold ph-arrow-right text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section id="why-us" class="py-24 lg:py-32 bg-brand-900 text-white relative overflow-hidden">
+        <!-- Subtle background pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+                <defs><pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="currentColor" stroke-width="1" fill="none"/></pattern></defs>
+                <rect width="100%" height="100%" fill="url(#grid-pattern)"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-20 text-center reveal">
+                <span class="text-brand-100 font-bold tracking-widest uppercase text-xs mb-3 block opacity-70">Why Travel With Us</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">A Focus on Reliability and Structure</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16">
+                <!-- Point 1 -->
+                <div class="flex flex-col sm:flex-row items-start gap-6 reveal">
+                    <div class="bg-white/10 p-4 rounded-2xl flex-shrink-0 border border-white/10">
+                        <i class="ph-fill ph-clock text-3xl text-brand-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Realistic Itineraries</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light">We plan trips with balanced travel times, actively avoiding rushed or overly packed schedules.</p>
+                    </div>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="flex flex-col sm:flex-row items-start gap-6 reveal delay-100">
+                    <div class="bg-white/10 p-4 rounded-2xl flex-shrink-0 border border-white/10">
+                        <i class="ph-fill ph-currency-inr text-3xl text-brand-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Transparent Pricing</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light">We provide clear cost breakdowns upfront. No hidden fees or unexpected surcharges.</p>
+                    </div>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="flex flex-col sm:flex-row items-start gap-6 reveal delay-200">
+                    <div class="bg-white/10 p-4 rounded-2xl flex-shrink-0 border border-white/10">
+                        <i class="ph-fill ph-handshake text-3xl text-brand-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Vetted Network</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light">We exclusively work with reliable hotels and local coordinators who meet our quality standards.</p>
+                    </div>
+                </div>
+                
+                <!-- Point 4 -->
+                <div class="flex flex-col sm:flex-row items-start gap-6 reveal">
+                    <div class="bg-white/10 p-4 rounded-2xl flex-shrink-0 border border-white/10">
+                        <i class="ph-fill ph-headset text-3xl text-brand-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Dedicated Support</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light">Direct access to our team before and during your trip for any necessary adjustments or assistance.</p>
+                    </div>
+                </div>
+                
+                <!-- Point 5 -->
+                <div class="flex flex-col sm:flex-row items-start gap-6 reveal delay-100">
+                    <div class="bg-white/10 p-4 rounded-2xl flex-shrink-0 border border-white/10">
+                        <i class="ph-fill ph-arrows-out-line-horizontal text-3xl text-brand-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Custom Flexibility</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light">Ability to modify our standard packages to better align with your specific travel requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST & REVIEWS SECTION -->
+    <section class="py-24 lg:py-32 bg-brand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-700 font-bold tracking-widest uppercase text-xs mb-3 block">Serving Travelers Since 2020</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Trusted by hundreds of families.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Premium Review Card 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between h-full hover:shadow-lg transition-shadow reveal">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex text-[#FFB400] text-lg">
+                                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                            </div>
+                            <!-- Verified badge -->
+                            <div class="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-check-circle"></i> Verified
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic mb-8 text-base leading-relaxed font-light">"The pacing of our trip was perfectly balanced. We saw everything we wanted to without feeling exhausted at the end of the day. Highly recommended."</p>
+                    </div>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gray-50">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-white flex items-center justify-center font-bold text-lg shadow-inner">A</div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Amit & Priya</p>
+                            <p class="text-xs text-gray-500">Family Trip, Kerala</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Review Card 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between h-full hover:shadow-lg transition-shadow reveal delay-100">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex text-[#FFB400] text-lg">
+                                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-check-circle"></i> Verified
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic mb-8 text-base leading-relaxed font-light">"Communication was clear from day one. There were no surprises with the hotels or the schedule. A highly professional managed experience from start to finish."</p>
+                    </div>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gray-50">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-white flex items-center justify-center font-bold text-lg shadow-inner">R</div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Rajesh Sharma</p>
+                            <p class="text-xs text-gray-500">Customized Tour, Rajasthan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Review Card 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between h-full hover:shadow-lg transition-shadow reveal delay-200">
+                    <div>
+                         <div class="flex items-center justify-between mb-6">
+                            <div class="flex text-[#FFB400] text-lg">
+                                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                            </div>
+                            <div class="flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-check-circle"></i> Verified
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic mb-8 text-base leading-relaxed font-light">"Their network of local coordinators is excellent. Everything ran strictly on time, and the accommodations were vetted. Will definitely be using them again."</p>
+                    </div>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gray-50">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-white flex items-center justify-center font-bold text-lg shadow-inner">S</div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Sneha Desai</p>
+                            <p class="text-xs text-gray-500">Group Travel, Himachal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="cta" class="py-24 bg-white border-t border-gray-100 relative overflow-hidden">
+        <!-- Decorative background elements -->
+        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <div class="bg-white rounded-[2rem] p-10 sm:p-16 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Start Planning Your Itinerary</h2>
+                <p class="text-xl text-brand-700 font-semibold mb-6">Speak directly with our travel planners.</p>
+                <p class="text-gray-600 mb-10 max-w-2xl mx-auto text-lg font-light">
+                    Send us a brief message with your preferred travel dates and regions. Our team will review your requirements and share a structured, practical plan.
+                </p>
+                
+                <div class="flex flex-col items-center gap-6">
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#20bd5a] hover:shadow-[0_8px_25px_rgba(37,211,102,0.3)] transition-all transform hover:-translate-y-1">
+                        <i class="ph-fill ph-whatsapp text-3xl"></i>
+                        Message us on WhatsApp
+                    </a>
+                    
+                    <div class="flex items-center gap-4 w-full max-w-xs mx-auto">
+                        <div class="h-px bg-gray-200 flex-1"></div>
+                        <span class="text-sm font-medium text-gray-400 uppercase tracking-widest">or</span>
+                        <div class="h-px bg-gray-200 flex-1"></div>
+                    </div>
+                    
+                    <a href="mailto:info@roviotravels.in" class="text-gray-600 font-medium hover:text-brand-900 transition-colors flex items-center gap-2 bg-gray-50 px-6 py-3 rounded-xl hover:bg-gray-100 border border-gray-100">
+                        <i class="ph-fill ph-envelope-simple text-xl"></i> info@roviotravels.in
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 py-20 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+                
+                <div class="col-span-1 md:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-2 text-white font-bold text-2xl mb-4 tracking-tight">
+                        <img src="favicon_black_bg.png" alt="Rovio Travels Logo" class="h-8 w-auto object-contain" />
+                        Rovio Travels
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6 font-light">A unit of Swarit Ventures Private Limited</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Contact Us</h4>
+                    <ul class="space-y-4 text-sm font-light">
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-phone mt-0.5 text-gray-500 text-lg"></i>
+                            <span class="hover:text-white transition-colors cursor-pointer">+91 8796280051</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-envelope-simple mt-0.5 text-gray-500 text-lg"></i>
+                            <a href="mailto:info@roviotravels.in" class="hover:text-white transition-colors">info@roviotravels.in</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Office Location</h4>
+                    <ul class="space-y-4 text-sm font-light">
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-map-pin mt-0.5 text-gray-500 text-lg flex-shrink-0"></i>
+                            <span class="leading-relaxed">
+                                6th Floor, Galaxy Blue Sapphire Plaza,<br>
+                                Sector 4, Noida Extension,<br>
+                                Uttar Pradesh 201016
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Legal & Links</h4>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="#about" class="hover:text-white transition-colors flex items-center gap-2"><i class="ph-bold ph-caret-right text-gray-600"></i> About Us</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors flex items-center gap-2"><i class="ph-bold ph-caret-right text-gray-600"></i> Packages</a></li>
+                        <li class="pt-2"><a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-gray-500">Terms & Conditions</a></li>
+                        <li><a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-gray-500">Privacy Policy</a></li>
+                        <li><a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-gray-500">Cancellation Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800/80 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500 font-light">
+                    &copy; 2026 Swarit Ventures Private Limited. All rights reserved.
+                </p>
+                <div class="flex gap-4 text-gray-500">
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-2xl"></i></a>
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors"><i class="ph-fill ph-facebook-logo text-2xl"></i></a>
+                    <a href="https://wa.me/918796280051" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPTS -->
+    <script>
+        // 1. Mobile Menu Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('open');
+        });
+
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('open');
+            });
+        });
+
+        // 2. Dynamic Sticky Navbar on Scroll
+        const navbar = document.getElementById('navbar');
+        const navContainer = document.getElementById('nav-container');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('border-transparent', 'border-gray-100');
+                navContainer.classList.replace('lg:h-24', 'lg:h-20'); // Shrink slightly on scroll
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('border-gray-100', 'border-transparent');
+                navContainer.classList.replace('lg:h-20', 'lg:h-24');
+            }
+        });
+
+        // 3. Intersection Observer for Scroll Reveal Animations
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            
+            // For first load, if elements are already in viewport, reveal them
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Trigger point
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
 </body>
 </html>
